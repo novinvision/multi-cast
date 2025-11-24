@@ -1,0 +1,30 @@
+{
+    "name": "novinvision/multi-cast",
+    "description": "A laravel package use pre designed casts for status, date and tel",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Novin Vision",
+            "email": "novinvision.com@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "NovinVision\\MultiCast\\": "src/"
+        }
+    },
+    "require": {
+        "laravel/framework": ">10.0",
+        "morilog/jalali": "3.*",
+        "nesbot/carbon": "*",
+        "propaganistas/laravel-phone": "^5.3"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "NovinVision\\MultiCast\\MultiCastServiceProvider"
+            ]
+        }
+    }
+}
