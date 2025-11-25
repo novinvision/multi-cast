@@ -5,18 +5,10 @@ namespace NovinVision\MultiCast\Casts;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use NovinVision\MultiCast\Class\StatusCaster;
 
 class StatusCast implements CastsAttributes
 {
-    public string $rendered = '';
-    public string $badge = '';
-
-    public function __construct(public ?string $value = null)
-    {
-        $this->rendered = self::statusTitle($this->value);
-        $this->badge = self::statusBadge($this->value);
-    }
-
     /**
      * Cast the given value.
      *
@@ -24,7 +16,7 @@ class StatusCast implements CastsAttributes
      */
     public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        return new static($value);
+        return new StatusCaster($value);
     }
 
     /**
@@ -34,7 +26,11 @@ class StatusCast implements CastsAttributes
      */
     public function set(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        return [$key => ($value->value ?? $value)];
+        if ($value instanceof StatusCaster) {
+            $value = $value->__toString();
+        }
+
+        return [$key => $value];
     }
 
     public static function statusColor($status): string
