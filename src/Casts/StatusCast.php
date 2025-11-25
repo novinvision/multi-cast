@@ -13,7 +13,7 @@ class StatusCast implements CastsAttributes
 
     public function __construct(public ?string $value = null)
     {
-        $this->rendered = trans("multi-cast::status.{$this->value}");
+        $this->rendered = self::statusTitle($this->value);
         $this->badge = self::statusBadge($this->value);
     }
 
@@ -55,7 +55,14 @@ class StatusCast implements CastsAttributes
         return sprintf(
             '<span class="badge text-bg-%s">%s</span>',
             self::statusColor($status),
-            Str::of(__("multi-cast::status.{$status}"))->replace('status.', '')
+            self::statusTitle($status)
         );
+    }
+
+    public static function statusTitle($status): string
+    {
+        return Str::of(__("multi-cast::status.{$status}"))
+            ->replace('multi-cast::', '')
+            ->replace('status.', '')->toString();
     }
 }
