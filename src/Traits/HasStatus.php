@@ -110,4 +110,9 @@ trait HasStatus
     {
         $query->where('status', Status::ACTIVE);
     }
+
+    public function scopePublished(\Illuminate\Database\Eloquent\Builder $query): void
+    {
+        $query->where('status', Status::PUBLISHED);
+    }
 }

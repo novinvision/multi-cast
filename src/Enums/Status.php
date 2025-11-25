@@ -60,4 +60,6 @@ enum Status
     const UNVERIFIED = 'unverified';
 
     const SENT = 'sent';
+
+    const PUBLISHED = 'published';
 }
