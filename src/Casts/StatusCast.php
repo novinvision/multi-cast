@@ -37,16 +37,25 @@ class StatusCast implements CastsAttributes
         return [$key => ($value->value ?? $value)];
     }
 
-    public static function statusBadge($status): string
+    public static function statusColor($status): string
     {
-        return sprintf('<span class="badge text-bg-%s">%s</span>', match ($status) {
+        return match ($status) {
             in_array($status, config('multi-cast.status_colors.danger')) => 'danger',
             in_array($status, config('multi-cast.status_colors.dark')) => 'dark',
             in_array($status, config('multi-cast.status_colors.warning')) => 'warning',
             in_array($status, config('multi-cast.status_colors.success')) => 'success',
             in_array($status, config('multi-cast.status_colors.info')) => 'info',
             in_array($status, config('multi-cast.status_colors.secondary')) => 'secondary',
-            default => config('multi-cast.default_color'),
-        }, Str::of(__("multi-cast::status.{$status}"))->replace('status.', ''));
+            default => config('multi-cast.default_color')
+        };
+    }
+
+    public static function statusBadge($status): string
+    {
+        return sprintf(
+            '<span class="badge text-bg-%s">%s</span>',
+            self::statusColor($status),
+            Str::of(__("multi-cast::status.{$status}"))->replace('status.', '')
+        );
     }
 }
